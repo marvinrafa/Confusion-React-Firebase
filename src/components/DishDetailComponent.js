@@ -3,6 +3,7 @@ import {
   Card,
   CardImg,
   CardText,
+  CardImgOverlay,
   CardBody,
   CardTitle,
   Breadcrumb,
@@ -21,15 +22,26 @@ import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
-const maxLength = (len) => (val) => !val || val.length <= len;
-const minLength = (len) => (val) => val && val.length >= len;
-
-function RenderDish({ dish }) {
+function RenderDish({ dish, favorite, postFavorite, auth }) {
   if (dish != null)
     return (
       <FadeTransform in transformProps={{ exitTransform: 'scale(0.5) translateY(-50%)' }}>
         <Card>
           <CardImg top src={baseUrl + dish.image} alt={dish.name} />
+          {auth ? (
+            <CardImgOverlay>
+              <Button
+                outline
+                color="primary"
+                onClick={() => (favorite ? console.log('Already favorite') : postFavorite(dish._id))}
+              >
+                {favorite ? <span className="fa fa-heart"></span> : <span className="fa fa-heart-o"></span>}
+              </Button>
+            </CardImgOverlay>
+          ) : (
+            <div></div>
+          )}
+
           <CardBody>
             <CardTitle>{dish.name}</CardTitle>
             <CardText>{dish.description}</CardText>
@@ -40,7 +52,7 @@ function RenderDish({ dish }) {
   else return <div></div>;
 }
 
-function RenderComments({ comments, postComment, dishId }) {
+function RenderComments({ comments, postComment, dishId, auth }) {
   if (comments != null)
     return (
       <div>
@@ -49,17 +61,19 @@ function RenderComments({ comments, postComment, dishId }) {
           <Stagger in>
             {comments.map((comment) => {
               return (
-                <Fade in>
+                <Fade in key={comment.id}>
                   <div>
-                    <li key={comment.id}>
+                    <li>
                       <p>{comment.comment}</p>
                       <p>
-                        --{comment.author},
-                        {new Intl.DateTimeFormat('en-US', {
+                        --{comment.author.firstname},
+                        {new Intl.DateTimeFormat('es-SV', {
                           year: 'numeric',
                           month: 'short',
-                          day: '2-digit'
-                        }).format(new Date(Date.parse(comment.date)))}
+                          day: '2-digit',
+                          hour: 'numeric',
+                          minute: 'numeric'
+                        }).format(new Date(Date.parse(comment.updatedAt)))}
                       </p>
                     </li>
                   </div>
@@ -68,7 +82,7 @@ function RenderComments({ comments, postComment, dishId }) {
             })}
           </Stagger>
         </ul>
-        <CommentForm dishId={dishId} postComment={postComment}></CommentForm>
+        <CommentForm dishId={dishId} postComment={postComment} auth={auth}></CommentForm>
       </div>
     );
   else return <div></div>;
@@ -108,11 +122,21 @@ const DishDetail = (props) => {
         </div>
         <div className="row">
           <div className="col-12 col-md-5 m-1">
-            <RenderDish dish={props.selectedDish} />
+            <RenderDish
+              dish={props.selectedDish}
+              favorite={props.favorite}
+              postFavorite={props.postFavorite}
+              auth={props.auth}
+            />
           </div>
 
           <div className="col-12 col-md-5 m-1">
-            <RenderComments comments={props.comments} postComment={props.postComment} dishId={props.selectedDish.id} />
+            <RenderComments
+              comments={props.comments}
+              postComment={props.postComment}
+              dishId={props.selectedDish._id}
+              auth={props.auth}
+            />
           </div>
         </div>
       </div>
@@ -132,7 +156,7 @@ class CommentForm extends Component {
   }
 
   handleSubmit(values) {
-    this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
+    this.props.postComment(this.props.dishId, values.rating, values.comment);
   }
 
   toggleModal() {
@@ -144,9 +168,14 @@ class CommentForm extends Component {
   render() {
     return (
       <div>
-        <Button className="text-white bg-dark" outline onClick={this.toggleModal}>
-          <span className="fa fa-edit fa-lg"></span> Submit Comment
-        </Button>
+        {this.props.auth ? (
+          <Button className="text-white bg-dark" outline onClick={this.toggleModal}>
+            <span className="fa fa-edit fa-lg"></span> Submit Comment
+          </Button>
+        ) : (
+          <p>--Login to submit a comment</p>
+        )}
+
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
           <ModalBody>
@@ -165,33 +194,7 @@ class CommentForm extends Component {
                   </Control.select>
                 </Row>
               </Col>
-              <Col className="form-group">
-                <Row md={12}>
-                  <Label htmlFor="author">Your Name</Label>
-                </Row>
-                <Row md={12}>
-                  <Control.text
-                    model=".author"
-                    id="author"
-                    name="author"
-                    placeholder="Your Name"
-                    className="form-control"
-                    validators={{
-                      minLength: minLength(3),
-                      maxLength: maxLength(15)
-                    }}
-                  />
-                  <Errors
-                    className="text-danger"
-                    model=".author"
-                    show="touched"
-                    messages={{
-                      minLength: 'Must be greater than 2 characters',
-                      maxLength: 'Must be 15 characters or less'
-                    }}
-                  />
-                </Row>
-              </Col>
+
               <Col className="form-group">
                 <Row md={12}>
                   <Label htmlFor="comment">Comment</Label>

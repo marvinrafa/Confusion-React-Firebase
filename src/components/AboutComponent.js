@@ -9,7 +9,6 @@ function About(props) {
   function RenderLeader({ leaders, isLoading, errMess }) {
     if (leaders != null)
       if (isLoading) {
-        console.log('Es verdad');
         return (
           <div className="container">
             <div className="row">
