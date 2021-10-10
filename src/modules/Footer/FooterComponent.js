@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './footer.css';
 
 function Footer(props) {
   return (
@@ -36,19 +37,15 @@ function Footer(props) {
               <br />
               <i className="fa fa-fax fa-lg"></i>: +852 8765 4321
               <br />
-              <i className="fa fa-envelope fa-lg"></i>:{' '}
-              <a href="mailto:confusion@food.net">confusion@food.net</a>
+              <i className="fa fa-envelope fa-lg"></i>: <a href="mailto:confusion@food.net">confusion@food.net</a>
             </address>
           </div>
-          <div className="col-12 col-sm-4 align-self-center">
+          <div className="col-12 col-sm-4 align-self-center social-links">
             <div className="text-center">
               <a className="btn btn-social-icon btn-google" href="http://google.com/+">
                 <i className="fa fa-google-plus"></i>
               </a>
-              <a
-                className="btn btn-social-icon btn-facebook"
-                href="http://www.facebook.com/profile.php?id="
-              >
+              <a className="btn btn-social-icon btn-facebook" href="http://www.facebook.com/profile.php?id=">
                 <i className="fa fa-facebook"></i>
               </a>
               <a className="btn btn-social-icon btn-linkedin" href="http://www.linkedin.com/in/">

@@ -1,0 +1,24 @@
+.row-header {
+  margin: 0px auto;
+  padding: 0px auto;
+}
+
+.fa-sign-in {
+  color: white;
+}
+
+.btn-login {
+  color: #fefefefe;
+}
+
+.btn-request-login {
+  margin-top: 10px;
+  background-color: #512da8;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 872px) {
+  .nav-icon {
+    min-width: 25px;
+  }
+}

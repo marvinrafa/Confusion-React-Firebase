@@ -1,4 +1,4 @@
-import * as ActionTypes from './ActionTypes';
+import * as ActionTypes from '../actionTypes/ActionTypes';
 
 //remmplazamos el state por un objeto que contiene el error message
 //tambien contiene el dato si está cargando

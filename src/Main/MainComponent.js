@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Menu from './MenuComponent';
-import Header from './HeaderComponent';
-import Footer from './FooterComponent';
-import Home from './HomeComponent';
-import Contact from './ContactComponent';
-import DishDetail from './DishDetailComponent';
-import About from './AboutComponent';
-import Favorites from './FavoriteComponent';
+import Menu from '../pages/Menu/MenuComponent';
+import Header from '../modules/Header/HeaderComponent';
+import Footer from '../modules/Footer/FooterComponent';
+import Home from '../pages/Home/HomeComponent';
+import Contact from '../pages/Contact/ContactComponent';
+import DishDetail from '../modules/DishDetail/DishDetailComponent';
+import About from '../pages/About/AboutComponent';
+import Favorites from '../pages/Favorites/FavoriteComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
@@ -17,11 +17,12 @@ import {
   fetchLeaders,
   postFeedback,
   loginUser,
+  googleLogin,
   logoutUser,
   fetchFavorites,
   postFavorite,
   deleteFavorite
-} from '../redux/ActionCreators';
+} from '../redux/actions/ActionCreators';
 import { actions } from 'react-redux-form';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
@@ -56,6 +57,8 @@ const mapDispatchToProps = (dispatch) => ({
   postFeedback: (firstname, lastname, telnum, email, agree, contactType, message) =>
     dispatch(postFeedback(firstname, lastname, telnum, email, agree, contactType, message)),
   loginUser: (creds) => dispatch(loginUser(creds)),
+  googleLogin: () => dispatch(googleLogin()),
+
   logoutUser: () => dispatch(logoutUser()),
   fetchFavorites: () => dispatch(fetchFavorites()),
   postFavorite: (dishId) => dispatch(postFavorite(dishId)),
@@ -86,7 +89,7 @@ class Main extends Component {
           comments={this.props.comments.comments.filter((comment) => comment.dish === match.params.dishId)}
           commentsErrMess={this.props.comments.errMess}
           postComment={this.props.postComment}
-          favorite={this.props.favorites.favorites.dishes.some((dish) => dish._id === match.params.dishId)}
+          favorite={this.props.favorites.favorites.dishes.some((dish) => dish === match.params.dishId)}
           postFavorite={this.props.postFavorite}
           auth={this.props.auth.isAuthenticated}
         />
@@ -150,7 +153,12 @@ class Main extends Component {
 
     return (
       <div>
-        <Header auth={this.props.auth} loginUser={this.props.loginUser} logoutUser={this.props.logoutUser} />
+        <Header
+          auth={this.props.auth}
+          googleLogin={this.props.googleLogin}
+          loginUser={this.props.loginUser}
+          logoutUser={this.props.logoutUser}
+        />
         <TransitionGroup>
           <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
             <Switch>
@@ -171,7 +179,11 @@ class Main extends Component {
                 exact
                 path="/favorites"
                 component={() => (
-                  <Favorites favorites={this.props.favorites} deleteFavorite={this.props.deleteFavorite} />
+                  <Favorites
+                    favorites={this.props.favorites}
+                    dishes={this.props.dishes}
+                    deleteFavorite={this.props.deleteFavorite}
+                  />
                 )}
               />
               <Route exact path="/aboutus" component={AboutPage} />

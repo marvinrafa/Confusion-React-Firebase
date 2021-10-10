@@ -14,20 +14,21 @@ import {
   ModalBody,
   Label,
   Col,
-  Row
+  Row,
+  Alert
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
-import { Loading } from './LoadingComponent';
-import { baseUrl } from '../shared/baseUrl';
+import { Loading } from '../../components/Loading/LoadingComponent';
 import { FadeTransform, Fade, Stagger } from 'react-animation-components';
+import './dishdetail.css';
 
 function RenderDish({ dish, favorite, postFavorite, auth }) {
   if (dish != null)
     return (
       <FadeTransform in transformProps={{ exitTransform: 'scale(0.5) translateY(-50%)' }}>
         <Card>
-          <CardImg top src={baseUrl + dish.image} alt={dish.name} />
+          <CardImg top src={dish.image} alt={dish.name} />
           {auth ? (
             <CardImgOverlay>
               <Button
@@ -62,20 +63,22 @@ function RenderComments({ comments, postComment, dishId, auth }) {
             {comments.map((comment) => {
               return (
                 <Fade in key={comment.id}>
-                  <div>
-                    <li>
-                      <p>{comment.comment}</p>
-                      <p>
-                        --{comment.author.firstname},
-                        {new Intl.DateTimeFormat('es-SV', {
-                          year: 'numeric',
-                          month: 'short',
-                          day: '2-digit',
-                          hour: 'numeric',
-                          minute: 'numeric'
-                        }).format(new Date(Date.parse(comment.updatedAt)))}
-                      </p>
-                    </li>
+                  <div className="comment-tabs">
+                    <Card>
+                      <CardBody>
+                        <CardTitle tag="h5">{comment.author.firstname}</CardTitle>
+                        <CardText>{comment.comment}</CardText>
+                        <CardText className="comment-date">
+                          <small className="text-muted">
+                            {new Intl.DateTimeFormat('es-SV', {
+                              year: 'numeric',
+                              month: 'short',
+                              day: '2-digit'
+                            }).format(new Date(Date.parse(comment.updatedAt.toDate())))}
+                          </small>
+                        </CardText>
+                      </CardBody>
+                    </Card>
                   </div>
                 </Fade>
               );
@@ -173,7 +176,7 @@ class CommentForm extends Component {
             <span className="fa fa-edit fa-lg"></span> Submit Comment
           </Button>
         ) : (
-          <p>--Login to submit a comment</p>
+          <Alert color="warning">Login to leave your comment</Alert>
         )}
 
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>

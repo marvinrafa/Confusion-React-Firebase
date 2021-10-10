@@ -1,14 +1,13 @@
 import React from 'react';
 import { Media, Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { baseUrl } from '../shared/baseUrl';
-import { Loading } from './LoadingComponent';
+import { Loading } from '../../components/Loading/LoadingComponent';
 
 function RenderMenuItem({ dish, deleteFavorite }) {
   return (
     <Media tag="li">
       <Media left middle>
-        <Media object src={baseUrl + dish.image} alt={dish.name} />
+        <Media object src={dish.image} alt={dish.name} />
       </Media>
       <Media body className="ml-5">
         <Media heading>{dish.name}</Media>
@@ -39,7 +38,9 @@ const Favorites = (props) => {
       </div>
     );
   } else if (props.favorites.favorites) {
-    const favorites = props.favorites.favorites.dishes.map((dish) => {
+    const favorites = props.favorites.favorites.dishes.map((dishId) => {
+      //Filtrando el dish que matchea con los ids de los favoritos
+      let dish = props.dishes.dishes.filter((dish) => dish._id === dishId)[0];
       return (
         <div key={dish._id} className="col-12 mt-5">
           <RenderMenuItem dish={dish} deleteFavorite={props.deleteFavorite} />

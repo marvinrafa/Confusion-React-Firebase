@@ -1,0 +1,9 @@
+@media (max-width: 872px) {
+  .leader-designation {
+    margin-bottom: 30px;
+  }
+
+  .leader-description {
+    display: none;
+  }
+}

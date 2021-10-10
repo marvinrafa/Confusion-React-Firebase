@@ -1,4 +1,4 @@
-import * as ActionTypes from './ActionTypes';
+import * as ActionTypes from '../actionTypes/ActionTypes';
 
 export const Leaders = (state = { isLoading: true, errMess: null, leaders: [] }, action) => {
   switch (action.type) {
