@@ -11,16 +11,24 @@ function Footer(props) {
             <h5>Links</h5>
             <ul className="list-unstyled">
               <li>
-                <Link to="/home">Home</Link>
+                <Link to="/home" className="footer-link">
+                  Home
+                </Link>
               </li>
               <li>
-                <Link to="/aboutus">About Us</Link>
+                <Link to="/aboutus" className="footer-link">
+                  About Us
+                </Link>
               </li>
               <li>
-                <Link to="/menu">Menu</Link>
+                <Link to="/menu" className="footer-link">
+                  Menu
+                </Link>
               </li>
               <li>
-                <Link to="/contactus">Contact Us</Link>
+                <Link to="/contactus" className="footer-link">
+                  Contact Us
+                </Link>
               </li>
             </ul>
           </div>
@@ -37,7 +45,10 @@ function Footer(props) {
               <br />
               <i className="fa fa-fax fa-lg"></i>: +852 8765 4321
               <br />
-              <i className="fa fa-envelope fa-lg"></i>: <a href="mailto:confusion@food.net">confusion@food.net</a>
+              <i className="fa fa-envelope fa-lg"></i>:
+              <a href="mailto:confusion@food.net" className="footer-link">
+                confusion@food.net
+              </a>
             </address>
           </div>
           <div className="col-12 col-sm-4 align-self-center social-links">

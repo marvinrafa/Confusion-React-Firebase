@@ -1,5 +1,5 @@
 .footer {
-  background-color: #d1c4e9;
+  background-color: #6e85b2;
   margin: 0px auto;
   padding: 20px 0px 20px 0px;
 }
@@ -7,4 +7,8 @@
 .social-links {
   margin-top: 20px;
   margin-bottom: 10px;
+}
+
+.footer-link {
+  color: #261c2c;
 }

@@ -22,3 +22,28 @@
     min-width: 25px;
   }
 }
+
+.jumbotron {
+  padding: 70px 30px 70px 30px;
+  margin: 0px auto;
+  background: #3e2c41;
+  color: rgb(245, 241, 233);
+  border-radius: 0%;
+}
+
+.navbar-dark {
+  background-color: #261c2c;
+}
+
+.header-logo {
+  text-align: center;
+}
+
+.modal-header {
+  background: #3e2c41;
+  color: rgb(245, 241, 233);
+}
+.modal-body {
+  background: #6e85b2;
+  color: rgb(245, 241, 233);
+}

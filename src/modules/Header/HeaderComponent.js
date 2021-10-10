@@ -140,6 +140,9 @@ class Header extends Component {
                   lipsmacking creations will tickle your culinary senses!
                 </p>
               </div>
+              <div className="col-12 col-sm-6 header-logo">
+                <img src="assets/images/logo.png" alt="Ristorante Con Fusion" />
+              </div>
             </div>
           </div>
         </Jumbotron>
@@ -147,8 +150,10 @@ class Header extends Component {
         {/* Login modal */}
 
         <Modal isOpen={this.state.isLoginModalOpen} toggle={this.toggleLoginModal}>
-          <ModalHeader toggle={this.toggleLoginModal}>Login</ModalHeader>
-          <ModalBody>
+          <ModalHeader toggle={this.toggleLoginModal} className="modal-header">
+            Login
+          </ModalHeader>
+          <ModalBody className="modal-body">
             <Form onSubmit={this.handleLogin}>
               <FormGroup>
                 <Label htmlFor="username">Username (email)</Label>
@@ -174,7 +179,7 @@ class Header extends Component {
             <p className=" mt-2">
               Not registered yet?
               <Button
-                color="link"
+                color="black"
                 onClick={() => {
                   this.toggleRegisterModal();
                   this.toggleLoginModal();
