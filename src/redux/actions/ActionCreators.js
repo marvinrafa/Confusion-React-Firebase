@@ -214,6 +214,12 @@ export const requestLogin = () => {
   };
 };
 
+export const requestRegister = () => {
+  return {
+    type: ActionTypes.REGISTER_REQUEST
+  };
+};
+
 export const receiveLogin = (user) => {
   return {
     type: ActionTypes.LOGIN_SUCCESS,
@@ -226,6 +232,26 @@ export const loginError = (message) => {
     type: ActionTypes.LOGIN_FAILURE,
     message
   };
+};
+
+export const registerUser = (creds) => (dispatch) => {
+  // We dispatch requestLogin to kickoff the call to the API
+  dispatch(requestRegister(creds));
+
+  //The auth imported from firebase
+  return auth
+    .createUserWithEmailAndPassword(creds.username, creds.password)
+    .then(() => {
+      //When you login, the auth firebase contains a currentUserProperty
+      var user = auth.currentUser;
+      //Storing user information in  localstorage
+      //We dont track the token because that is a task of firebase module
+      localStorage.setItem('user', JSON.stringify(user));
+      // Dispatch the success action
+      dispatch(fetchFavorites());
+      dispatch(receiveLogin(user));
+    })
+    .catch((error) => dispatch(loginError(error.message)));
 };
 
 export const loginUser = (creds) => (dispatch) => {

@@ -30,7 +30,7 @@ class Header extends Component {
     };
 
     this.toggleLoginModal = this.toggleLoginModal.bind(this);
-    this.toggleRegisterModal = this.toggleRegisterModal.bind(this);
+    // this.toggleRegisterModal = this.toggleRegisterModal.bind(this);
 
     this.toggleNav = this.toggleNav.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -61,6 +61,12 @@ class Header extends Component {
     this.props.loginUser({ username: this.username.value, password: this.password.value });
     event.preventDefault();
   }
+
+  // handleRegister(event) {
+  //   event.preventDefault();
+  //   this.toggleRegisterModal();
+  //   this.props.registerUser({ username: this.username.value, password: this.password.value });
+  // }
 
   handleGoogleLogin(event) {
     this.toggleLoginModal();
@@ -176,7 +182,7 @@ class Header extends Component {
             <Button color="danger" onClick={this.handleGoogleLogin}>
               <span className="fa fa-google fa-lg"></span> Login with Google
             </Button>
-            <p className=" mt-2">
+            {/* <p className=" mt-2">
               Not registered yet?
               <Button
                 color="black"
@@ -187,39 +193,49 @@ class Header extends Component {
               >
                 Click Here!
               </Button>
-            </p>
+            </p> */}
           </ModalBody>
         </Modal>
 
         {/* Register Modal */}
 
-        <Modal isOpen={this.state.isRegisterModalOpen} toggle={this.toggleRegisterModal}>
+        {/* <Modal isOpen={this.state.isRegisterModalOpen} toggle={this.toggleRegisterModal}>
           <ModalHeader toggle={this.toggleRegisterModal}>Register</ModalHeader>
           <ModalBody>
-            <Form onSubmit={this.handleRegister}>
+            <Form onSubmit={this.handleRegister} id="register-form">
               <FormGroup>
-                <Label htmlFor="username">Your e-mail</Label>
-                <Input type="email" id="username" name="username" innerRef={(input) => (this.username = input)} />
+                <Label htmlFor="register_username">Your e-mail</Label>
+                <Input
+                  type="email"
+                  id="register_username"
+                  name="register_username"
+                  innerRef={(input) => (this.username = input)}
+                />
               </FormGroup>
               <FormGroup>
-                <Label htmlFor="password">Password</Label>
-                <Input type="password" id="password" name="password" innerRef={(input) => (this.password = input)} />
+                <Label htmlFor="register_password">Password</Label>
+                <Input
+                  type="password"
+                  id="register_password"
+                  name="register_password"
+                  innerRef={(input) => (this.password = input)}
+                />
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="checkbox" name="remember" innerRef={(input) => (this.remember = input)} />
+                  <Input type="checkbox" name="register_remenber" innerRef={(input) => (this.remember = input)} />
                   Remember me
                 </Label>
               </FormGroup>
               <Button type="submit" value="submit" className="btn-request-login">
-                Login
+                Register account
               </Button>
             </Form>
             <Button color="danger" onClick={this.handleGoogleLogin}>
               <span className="fa fa-google fa-lg"></span> SignUp with Google
             </Button>
           </ModalBody>
-        </Modal>
+        </Modal> */}
       </div>
     );
   }

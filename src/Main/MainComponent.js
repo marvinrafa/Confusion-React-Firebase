@@ -22,6 +22,7 @@ import {
   fetchFavorites,
   postFavorite,
   deleteFavorite
+  // registerUser
 } from '../redux/actions/ActionCreators';
 import { actions } from 'react-redux-form';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
@@ -57,6 +58,8 @@ const mapDispatchToProps = (dispatch) => ({
   postFeedback: (firstname, lastname, telnum, email, agree, contactType, message) =>
     dispatch(postFeedback(firstname, lastname, telnum, email, agree, contactType, message)),
   loginUser: (creds) => dispatch(loginUser(creds)),
+  // registerUser: (creds) => dispatch(registerUser(creds)),
+
   googleLogin: () => dispatch(googleLogin()),
 
   logoutUser: () => dispatch(logoutUser()),
@@ -80,7 +83,6 @@ class Main extends Component {
 
   render() {
     const DishWithId = ({ match }) => {
-      console.log(this.props.favorites.favorites);
       return this.props.auth.isAuthenticated && this.props.favorites.favorites ? (
         <DishDetail
           selectedDish={this.props.dishes.dishes.filter((dish) => dish._id === match.params.dishId)[0]}
@@ -157,6 +159,7 @@ class Main extends Component {
           auth={this.props.auth}
           googleLogin={this.props.googleLogin}
           loginUser={this.props.loginUser}
+          // registerUser={this.props.registerUser}
           logoutUser={this.props.logoutUser}
         />
         <TransitionGroup>
